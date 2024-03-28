@@ -1,0 +1,10 @@
+* {
+    color: red;
+}
+
+.content {
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 10px;
+}

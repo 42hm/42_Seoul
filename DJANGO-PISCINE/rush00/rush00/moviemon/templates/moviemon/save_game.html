@@ -1,0 +1,31 @@
+{% extends 'moviemon/base.html' %} {% block title %}
+<title>SAVE</title>
+{% endblock title %} {% block content %}
+<div class="save_scene">
+  <div class="save-comment-block">
+    <div class="save-comment-a" {% if index == 0 %}style="color:blue; text-shadow: 1px 1px 1px navy;"{% endif %}>
+      Slot A : {% if a_all_monster == 0 %}
+		Free
+	  {% else %}
+		{{ a_captured_monster }} / {{ a_all_monster }}
+		{% endif %}
+    </div>
+    <div class="save-comment-b" {% if index == 1 %}style="color:blue; text-shadow: 1px 1px 1px navy;"{% endif %}>
+		Slot B : {% if b_all_monster == 0 %}
+		Free
+	  {% else %}
+		{{ b_captured_monster }} / {{ b_all_monster }}
+		{% endif %}
+    </div>
+    <div class="save-comment-c" {% if index == 2 %}style="color:blue; text-shadow: 1px 1px 1px navy;"{% endif %}>
+		Slot C : {% if c_all_monster == 0 %}
+		Free
+	  {% else %}
+		{{ c_captured_monster }} / {{ c_all_monster }}
+		{% endif %}
+    </div>
+    <div class="save-button-a">🅰 Save</div>
+    <div class="save-button-b">🅱 Cancel</div><br>
+  </div>
+</div>
+{% endblock content %}

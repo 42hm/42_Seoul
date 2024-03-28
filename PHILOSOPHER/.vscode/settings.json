@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"*.html": "html",
+		"philo_bonus.h": "c"
+	}
+}

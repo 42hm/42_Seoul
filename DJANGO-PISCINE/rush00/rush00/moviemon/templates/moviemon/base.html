@@ -1,0 +1,607 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block title %}
+    <title>MOVIEMON</title>
+    {% endblock title %}
+    <script type="text/javascript" src="{% static 'js/button_events.js' %}"></script>
+    <style>
+
+      @font-face {
+        font-family: "AppleSDGothicNeo";
+        font-style: normal;
+        src: url("{% static 'fonts/AppleSDGothicNeo.ttf' %}") format("truetype");
+      }
+
+      .container {
+        margin-left: auto;
+        margin-right: auto;
+        width: 51.5vh;
+        height: calc(1.8846 * 51.5vh);
+        font-family: "AppleSDGothicNeo";
+        background-image: url("{% static 'images/gameboy.png' %}");
+        background-size: cover;
+        position: relative;
+      }
+
+      .content {
+        width: 47.2vh;
+        height: calc(0.893 * 47.2vh);
+        background-color: transparent;
+        position: absolute;
+        border-radius: 25px;
+        top: 1.5vh;
+        left: 2vh;
+      }
+
+      /* WORLDMAP SCENE */
+
+      .worldmap-container {
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        /* background-color: white; */
+        background-image: url("{% static 'images/map.png' %}");
+        /* color: black; */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .worldmap-table {
+        margin-left: auto;
+        margin-right: auto;
+        table-layout: fixed;
+        width: 26vh;
+      }
+
+      .worldmap-td { /* 맵 */
+        text-align: center;
+
+        width: 3.5vh;
+        height: 3.5vh;
+      }
+
+      .worldmap-player {
+        background-image: url('{% static "images/player.png" %}');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      .worldmap-movieball {
+        /* margin: auto auto; */
+        bottom: 50vh;
+        margin-top: -43.5vh;
+        color: ivory;
+        /* left: 2vh; */
+        /* margin-left: 60vw; */
+        margin-left: 1.3vh;
+        /* margin-right: 15.5vw; */
+        font-size:2vh;
+        height: fit-content;
+        width: fit-content;
+        /* float: center; */
+        /* text-align: center; */
+        display: flex;
+      }
+
+      .worldmap-message {
+        margin-top: -12vh;
+        margin-left: 11vw;
+        /* margin-left: 35vh; */
+        /* margin-right: 10px; */
+        height: fit-content;
+        width: fit-content;
+        display: flex;
+        float: left;
+        height: fit-content;
+        width: fit-content;
+      }
+
+      .worldmap-button-select {
+        display: absolute;
+        margin-top: -2.5vh;
+        margin-left: 5vh;
+        font-size: 1.5vh;
+        float: left;
+        height: fit-content;
+        color: ivory;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .worldmap-button-start {
+        display: absolute;
+        margin-top: -2.5vh;
+        margin-right: 5vh;
+        font-size: 1.5vh;
+        float: right;
+        height: fit-content;
+        color: ivory;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .worldmap-flush-block {
+        width: 100%;
+        height: 30%;
+        bottom: 2.9vh;
+        /* background-color: white; */
+        background-image: url("{% static 'images/comment.png' %}");
+        position: absolute;
+        background-size: cover;
+        color:ivory;
+        /* box-shadow: inset 3px 3px 5px black; */
+      }
+
+      .worldmap-flush-comment {
+        font-size: 1.5vh;
+        position: absolute;
+        top: 4.7vh;
+        left: 5vw;
+      }
+
+      #btn-up {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        width: 3.95vh;
+        height: 3.8vh;
+        top: 62.9vh;
+        left: 10.82vh;
+        border-radius: 5px;
+        /* border-top-right-radius: 50px;
+        border-top-left-radius: 50px; */
+      }
+
+      #btn-down {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        width: 3.95vh;
+        height: 3.8vh;
+        top: 70.5vh;
+        left: 10.82vh;
+        border-radius: 5px;
+        /* border-bottom-right-radius: -100px;
+        border-bottom-left-radius: -100px; */
+      }
+
+      #btn-left {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        width: 3.8vh;
+        height: 3.95vh;
+        top: 66.6vh;
+        left: 7vh;
+        border-radius: 5px;
+        /* border-top-left-radius: 50px;
+        border-bottom-left-radius: 50px; */
+      }
+
+      #btn-right {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        width: 3.8vh;
+        height: 3.95vh;
+        top: 66.6vh;
+        left: 15vh;
+        border-radius: 5px;
+        /* border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px; */
+      }
+
+      #btn-a {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        width: 5vh;
+        height: 5vh;
+        top: 64.6vh;
+        left: 39.7vh;
+        border-radius: 50vh;
+        /* box-shadow: inset 1px 1px 10px 1px rgb(141, 56, 101), */
+          /* 1px 1px 10px 1px rgb(42, 42, 42); */
+      }
+      #btn-b {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        width: 5vh;
+        height: 5vh;
+        top: 67vh;
+        left: 31.79vh;
+        border-radius: 50vh;
+        /* box-shadow: inset 1px 1px 10px 1px rgb(141, 56, 101), */
+          /* 1px 1px 10px 1px rgb(42, 42, 42); */
+      }
+      #btn-select {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        /* transform: rotate(155deg); */
+        width: 3.26vh;
+        height: 3.26vh;
+        bottom: 4.6vh;
+        left: 19.77vh;
+        border-radius: 50vh;
+      }
+      #btn-start {
+        /* background-color: rgba(42, 42, 42, 42); */
+        position: absolute;
+        /* transform: rotate(155deg); */
+        width: 3.26vh;
+        height: 3.26vh;
+        bottom: 4.6vh;
+        left: 28.59vh;
+        border-radius: 50vh;
+      }
+      /* BATTLE SCENE */
+
+      .battle_scene {
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+        background-image: url("{% static 'images/battle_.png' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        /* box-shadow: inset 3px 3px 5px black; */
+      }
+
+      .battle_poster {
+        position: absolute;
+        width: 14vh;
+        height: 17vh;
+        right: 5.3vh;
+        top: 1vh;
+        background-size: contain;
+        background-repeat: no-repeat;
+        /* box-shadow: 5px 5px 5px #424242; */
+      }
+
+      .battle_movie_strength {
+        position: absolute;
+        font-size: 2vh;
+        left: 26.6vh;
+        top: 23.9vh;
+        color: #000000;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .battle_movie_name {
+        position: absolute;
+        font-size: 1.5vh;
+        left: 28vh;
+        /* top: 3.7vh; */
+        /* word-wrap: break-word; */
+        /* width: 320px; */
+        top: 20.2vh;
+        color: #000000;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .battle_text {
+        position: absolute;
+        font-size: 1.9vh;
+        left: 3vh;
+        top: 25vh;
+        word-wrap: break-word;
+        width: 620px;
+        color: #000000;
+        text-shadow: 1px 1px 1px #383838;
+      }
+
+      .battle_text_second_line {
+        position: absolute;
+        font-size: 3vh;
+        right: 30vh;
+        top: 46vh;
+        color: #000000;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .battle_movie_ball {
+        position: absolute;
+        font-size: 2vh;
+        left: 28.9vh;
+        top: 27.85vh;
+        color: #000000;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .battle_user_power {
+        position: absolute;
+        font-size: 2.2vh;
+        left: 8.15vh;
+        top: 27.7vh;
+        color: #000000;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .battle_user_winning_rate {
+        position: absolute;
+        font-size: 2vh;
+        right: 3.4vh;
+        top: 23.9vh;
+        color: #000000;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      /* TITLE */
+      .title-container {
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+        background-color: white;
+        background-image: url("{% static 'images/title.png' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .title-header {
+        font-size: 3vh;
+        width: fit-content;
+        bottom: 10vh;
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+        /* border-bottom: solid #424242 1vh; */
+      }
+
+      .title-button {
+        margin: 0.5vh !important;
+        padding: 0.5vh !important;
+        /* box-sizing: border-box;
+        border: solid #545454 0.25vh; */
+        text-align: center;
+        font-size: 3vh;
+      }
+
+      /* MOVIEDEX */
+      .moviedex-container {
+        width: 100%;
+        height: 100%;
+        /* border-radius: 25px; */
+        background-color:rgb(95,132,239);
+        color: ivory;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .moviedex-card-container {
+        display: flex;
+        flex-wrap: nowrap;
+      }
+
+      .moviedex-card {
+        width: 30%;
+        height: 100%;
+        margin-left: 2.5%;
+        margin-top: auto;
+        margin-bottom: auto;
+        object-fit: contain;
+
+
+
+      }
+
+      .moviedex-blur {
+        background-color: rgba(0, 0, 0, 0.125);
+        box-shadow: inset 0 0 0 1000px rgba(255, 255, 255, 0.5);
+        filter: blur(3px);
+      }
+
+      .moviedex-button-container {
+        width: 100%;
+        height: 20%;
+        border-radius: 25px;
+        background-color: white;
+      }
+
+      .moviedex-button-a {
+        /* display: relative; */
+        /* box-sizing: border-box; */
+        /* border: solid #545454 0.25vh; */
+        margin-top: -4vh;
+        margin-left: 2.5vw;
+        font-size: 1.5vh;
+        float: left;
+        height: fit-content;
+        color: ivory;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .moviedex-button-b {
+        /* display: absolute; */
+        /* box-sizing: border-box; */
+        /* border: solid #545454 0.25vh; */
+        margin-top: -2.7vh;
+        margin-right: 2.5vw;
+        font-size: 1.5vh;
+        float: right;
+        height: fit-content;
+        color: ivory;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .moviedex-ative {
+        transform: scale(1.2);
+      }
+
+      /* moviedex detail */
+      .moviedex-detail-container {
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+        background-color: white;
+        color: black;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      .moviedex-detail-image {
+        width: 45%;
+        height: 90%;
+        object-fit: contain;
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+
+      .moviedex-detail-info {
+        width: 50%;
+        height: 100%;
+        margin-top: auto;
+        margin-bottom: auto;
+      }
+
+      .moviedex-detail-button {
+        margin: 0.25vh !important;
+        padding: 0.5vh !important;
+        font-size: 1vh;
+        position: absolute;
+        bottom: -0.5vh;
+        right: 2vw;
+        text-shadow: 1px 1px 1px #383838;
+      }
+
+      /* option detail */
+      .option_scene {
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+        /* background-color: white; */
+        /* background-image: url("{% static 'images/comment_block.png' %}"); */
+        /* background-size: contain; */
+        position: relative;
+        /* box-shadow: inset 3px 3px 5px black; */
+      }
+
+      .option-comment-block {
+        width: 100%;
+        height: 100%;
+        /* top: 1vh; */
+        background-color:rgb(95,132,239);
+        border-radius: 25px;
+        margin-left: auto;
+        margin-right: auto;
+        background-image: url("{% static 'images/comment.png' %}");
+        position: absolute;
+        background-repeat: no-repeat;
+        background-position-y: bottom;
+        background-size: contain;
+        /* box-shadow: inset 3px 3px 5px black; */
+      }
+
+      .option-comment {
+        font-size: 1.5vh;
+        position: absolute;
+        top: 33vh;
+        left: 12.9vh;
+        /* margin: auto auto; */
+        color: ivory;
+      }
+
+      /* save detail */
+      .save_scene {
+        width: 100%;
+        height: 100%;
+        border-radius: 25px;
+        background-color:rgb(95,132,239);
+        color: ivory;
+        /* background-image: url("{% static 'images/save.png' %}"); */
+        /* background-size: cover; */
+        /* background-repeat: no-repeat; */
+        position: relative;
+        /* box-shadow: inset 3px 3px 5px black; */
+        overflow: hidden;
+      }
+
+      .save-comment-block {
+        width: 100%;
+        height: 100%;
+        top: 1.5vh;
+        background-color:rgb(95,132,239);
+        background-image: url("{% static 'images/save.png' %}");
+        position: absolute;
+        background-size: contain;
+        /* box-shadow: inset 3px 3px 5px black; */
+      }
+
+      .save-comment-a {
+        font-size: 3vh;
+        position: absolute;
+        top: 5.3vh;
+        left: 4.5vw;
+      }
+
+      .save-comment-b {
+        font-size: 3vh;
+        position: absolute;
+        top: 17.2vh;
+        left: 4.5vw;
+      }
+
+      .save-comment-c {
+        font-size: 3vh;
+        position: absolute;
+        top: 28.8vh;
+        left: 4.5vw;
+      }
+
+      .save-button-a {
+        display: absolute;
+        margin-top: 38vh;
+        margin-left: 10vh;
+        font-size: 1.5vh;
+        float: left;
+        height: fit-content;
+        color: black;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .save-button-b {
+        display: absolute;
+        margin-top: 38vh;
+        margin-right: 10vh;
+        font-size: 1.5vh;
+        float: right;
+        height: fit-content;
+        color: black;
+        /* text-shadow: 1px 1px 1px #383838; */
+      }
+
+      .grid-container{
+        display : grid;
+        grid-template-columns: auto auto auto;
+        padding : 10px
+      }
+      .grid-item{
+        border : 1px solid
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="content">{% block content %}{% endblock content %}</div>
+      <a href="{{ request.path }}?key=up" id="btn-up"></a>
+      <a href="{{ request.path }}?key=left" id="btn-left"></a>
+      <a href="{{ request.path }}?key=right" id="btn-right"></a>
+      <a href="{{ request.path }}?key=down" id="btn-down"></a>
+      <a href="{{ request.path }}?key=a" id="btn-a"></a>
+      <a href="{{ request.path }}?key=b" id="btn-b"></a>
+      <a href="{{ request.path }}?key=select" id="btn-select"></a>
+      <a href="{{ request.path }}?key=start" id="btn-start"></a>
+    </div>
+  </body>
+
+</html>

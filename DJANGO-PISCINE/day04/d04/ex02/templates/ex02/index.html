@@ -1,0 +1,12 @@
+{% extends 'ex02/base.html' %} {% load static %} {% block title %}
+<title>History Form</title>
+{% endblock title %} {% block style %} {% endblock style %} {% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" id="history" name="history" placeholder="입력하세요">
+    <input type="submit" value="submit"></input>
+</form>
+<h2>Real History</h2>
+{% for history in historys reversed %}
+<p>{{ history }}</p>
+{% endfor %} {% endblock %}

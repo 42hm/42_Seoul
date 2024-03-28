@@ -1,0 +1,4 @@
+
+recursive-include d08/static *
+recursive-include d08/templates *
+recursive-include docs *

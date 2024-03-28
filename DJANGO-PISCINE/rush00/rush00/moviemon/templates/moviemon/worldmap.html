@@ -1,0 +1,33 @@
+{% extends 'moviemon/base.html' %} {% block title %}
+{% load static %}
+<title>WORLDMAP</title>
+{% endblock title %}
+
+{% block content %}
+<div class="worldmap-container">
+  <table class="worldmap-table">
+    {% for i in '0123456789' %}
+    <tr>
+    	{% for j in '0123456789' %}
+    	<td class="worldmap-td {% if i == y and j == x %} worldmap-player{% endif %}" style="text-align: center;">
+</td>
+		</td>
+    	{% endfor %}
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+<div class="worldmap-button-select">SELECT > Moviedex</div>
+<div class="worldmap-button-start">START > Option</div><br>
+<div class="worldmap-message">{{message}}</div>
+<div class="worldmap-movieball">Movieball : {{movie_ball_count}}</div>
+{% if isBattle %}
+  <div class="worldmap-flush-block">
+    <div class="worldmap-flush-comment">
+      {% if isBattle == True %}
+        🅰 Start to catch
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+{% endblock content %}

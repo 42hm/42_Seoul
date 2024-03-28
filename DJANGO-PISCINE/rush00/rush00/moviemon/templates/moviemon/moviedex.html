@@ -1,0 +1,13 @@
+{% extends 'moviemon/base.html' %} {% block title %}
+<title>MOVIEDEX</title>
+{% endblock title %} {% block content %}
+<div class="moviedex-container">
+  <div class="moviedex-card-container">
+    {% for m in movie %}
+      <img class="moviedex-card" src="{{ m.post_url }}" />
+    {% endfor %}
+  </div>
+</div>
+  <div class="moviedex-button-a">🅰 More information</div>
+  <div class="moviedex-button-b">Select - Back To WorldMap</div>
+{% endblock content %}

@@ -1,0 +1,16 @@
+{% extends 'moviemon/base.html' %} {% block title %}
+<title>{{ title }}</title>
+{% endblock title %} {% block content %}
+<div class="moviedex-detail-container">
+  <img class="moviedex-detail-image" src="{{ post_url }}" />
+  <div class="moviedex-detail-info">
+    <p>title : {{ title }}</p>
+    <p>year : {{ year }}</p>
+    <p>director : {{ director }}</p>
+    <p>rating : {{ rating }}</p>
+    <p>plot</p>
+    <div>{{ plot }}</div>
+    <div class="moviedex-detail-button">🅱 Back To Moviedex</div>
+  </div>
+</div>
+{% endblock content %}

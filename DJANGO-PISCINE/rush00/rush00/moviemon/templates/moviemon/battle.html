@@ -1,0 +1,13 @@
+{% extends 'moviemon/base.html' %} {% block title %}
+<title>BATTLE</title>
+{% endblock title %} {% block content %}
+<div class="battle_scene">
+  <div class="battle_movie_name">{{ movie.title }}</div>
+  <div class="battle_movie_strength">LV {{ movie.rating }}</div>
+  <img class="battle_poster" src="{{ movie.post_url }}"></img>
+  <div class="battle_movie_ball"> BALL {{ game.movie_ball_count }}</div>
+  <div class="battle_user_power"> LV {{ game.player_strength }}</div>
+  <div class="battle_user_winning_rate"> RATE {{ sibal }}%</div>
+  <div class="battle_text_second_line">{{ text }}</div>
+</div>
+{% endblock content %}
